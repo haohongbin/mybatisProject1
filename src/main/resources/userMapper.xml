@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace命名空间 防止sql语句id重名
+     namespace命名 包名+类名/包名+mapper文件名
+  -->
+<mapper namespace="userMapper">
+    <!--id在该文件中要唯一
+        parameterType 指sql语句参数类型
+        resultType 返回结果类型
+        useGeneratedKeys="true" 使用自增逐渐
+     -->
+    <!--<select id="selectUser" resultType="User">-->
+        <!--select id,name userName,age from student where id = #{id}-->
+    <!--</select>-->
+    <select id="selectUser" resultMap="UserMap">
+    select id,name,age from student where id = #{id}
+    </select>
+    <resultMap id="UserMap" type="User">
+        <!--id为主键-->
+        <id column="id" property="id"/>
+        <!--column是数据库中表的列名 property是对应实体类的属性名-->
+        <result column="name" property="userName"/>
+        <result column="age" property="age"/>
+    </resultMap>
+    <!--查询所有用户-->
+    <select id="selectAll" resultType="User">
+        select * from student
+    </select>
+
+    <!--分页查询-->
+    <select id="selectAll2" parameterType="Map" resultType="User">
+        select * from student limit #{startIndex},#{pageSize}
+    </select>
+
+    <insert id="addUser" parameterType="User" useGeneratedKeys="true">
+        insert into student(name,age) values (#{name},#{age})
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update student set name =#{name },age=#{age} where id=#{id}
+    </update>
+
+    <delete id="deleteUser">
+        delete from student where id=#{id}
+    </delete>
+
+</mapper>

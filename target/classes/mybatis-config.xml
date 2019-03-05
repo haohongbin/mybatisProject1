@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties"/>
+    <typeAliases>
+        <!--为指定类型指名别名 使得在mapper映射文件中可以简化引用-->
+        <typeAlias type="cn.sxt.entity.User" alias="User"/>
+        <!--为某个包下的所有类指定别名 默认别名是对应的类名-->
+        <package name="cn.sxt.entity"/>
+    </typeAliases>
+    <!--environments 指向mybatis可以配置多个环境 default指向默认的环境
+        每个SqlSessionFactory对应一个环境environment
+    -->
+    <environments default="development">
+        <environment id="development">
+            <!--   -->
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 定义映射sql语句文件  -->
+    <mappers>
+        <!--<mapper resource="userMapper.xml"/>-->
+        <mapper class="cn.sxt.interfac.UserDao"/>
+    </mappers>
+</configuration>
